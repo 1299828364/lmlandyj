@@ -63,7 +63,7 @@
     </insert>
 
     <delete id="deleteByUserNo">
-        delete from course where course_no=#{courseNo}
+        delete from user where user_no=#{userNo}
     </delete>
 
 </mapper>

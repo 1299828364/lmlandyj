@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace写对应的接口的全路径-->
+<mapper namespace="lml.lml.repository.PowerRepository">
+    <!--Power表-->
+    <resultMap id="PowerMap" type="lml.lml.domain.Power">
+
+        <!--主键-->
+        <result column="power_No" property="power"/>
+
+        <!--普通的东西（列）-->
+        <result column="power_name" property="powerName"/>
+    </resultMap>
+
+
+    <sql id="Power_Column_List">
+        power_no,power_name
+    </sql>
+
+    <select id="findAll" resultMap="PowerMap">
+        select <include refid="Power_Column_List"/>
+        from power
+    </select>
+
+
+    <!--通过powerNo查找角色表-->
+    <select id="findOneByNo" resultMap="PowerMap">
+        select <include refid="Power_Column_List"/>
+        from power where power_no=#{powerNo}
+    </select>
+
+
+
+    <insert id="editPower" parameterType="lml.lml.domain.Power">
+        <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">
+            select count(power_no) from power where power_no = #{powerNo}
+        </selectKey>
+        <if test="count > 0">
+            update course
+            <set>
+                power_no=#{powerNo},power_name=#{powerName}
+            </set>
+            <where>
+                power_no = #{powerNo}
+            </where>
+        </if>
+        <if test="count == 0">
+            insert into power (
+            <include refid="Power_Column_List" />
+            )
+            values(
+            #{powerNo},#{powerName}
+            )
+        </if>
+    </insert>
+
+    <delete id="deleteByPowerNo">
+        delete from power where power_no=#{powerNo}
+    </delete>
+
+</mapper>
