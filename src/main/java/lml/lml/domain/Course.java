@@ -3,7 +3,7 @@ package lml.lml.domain;
 import java.util.Date;
 
 public class Course {
-    private Integer courseNo;
+    private String courseNo;
     private String courseTitle;
     private String content;
     private Date createDate;
@@ -11,11 +11,11 @@ public class Course {
     private Integer columnNo;
     private Integer count;
 
-    public Integer getcourseNo() {
+    public String getCourseNo() {
         return courseNo;
     }
 
-    public void setcourseNo(Integer courseNo) {
+    public void setCourseNo(String courseNo) {
         this.courseNo = courseNo;
     }
 

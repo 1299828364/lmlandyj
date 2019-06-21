@@ -57,9 +57,9 @@ public class HelloCotrol {
         return "hello";
     }
 
-    @ResponseBody
-    @GetMapping("/test")
-    public List<Course> getAll(){
-        return wenzhangService.findAll();
-    }
+//    @ResponseBody
+//    @GetMapping("/test")
+//    public List<Course> getAll(){
+//        return wenzhangService.findAll();
+//    }
 }

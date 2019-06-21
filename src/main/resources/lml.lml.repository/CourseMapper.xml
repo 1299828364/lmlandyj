@@ -96,22 +96,31 @@
     <!--查找所有文章-->
     <select id="findAll" resultMap="CourseMap">
         select <include refid="Course_Column_List"/>
-        from course
+        from course order by createDate asc
     </select>
 
 
     <!--通过文章No查找角色表-->
-    <select id="findOneOfRoleByRoleId" resultMap="CourseMap">
-        select <include refid="_Column_List"/>
-        from course where course_no=#{courseNo}
+    <select id="findOneByNo" resultMap="CourseMap">
+        select <include refid="Course_Column_List"/>
+        from course where course_no=#{courseNo} order by createDate asc
     </select>
 
-    <insert id="addCourse" parameterType="lml.lml.domain.Course">
+    <!--通过时间查找角色表-->
+    <select id="findByDate" resultMap="CourseMap">
+        select <include refid="Course_Column_List"/>
+        from course where createDate>=#{start} and #{end} >= createDate
+        order by createDate asc
+    </select>
+
+
+
+    <insert id="editCourse" parameterType="lml.lml.domain.Course">
     <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">
-        select count(id) from role where id = #{roleId}
+        select count(course_no) from course where course_no = #{courseNo}
         </selectKey>
         <if test="count > 0">
-            update role
+            update course
                 <set>
                 course_no=#{courseNo}, course_title= #{courseTitle},  content= #{content}, create_date = #{createDate},
                 state = #{state}, column_no = #{columnNo},
@@ -121,15 +130,18 @@
                 </where>
         </if>
         <if test="count == 0">
-        insert into role (
+        insert into course (
         <include refid="Course_Column_List" />
         )
         values(
-        #{courseNo},#{courseTitle}, #{content}, #{createDate},#{state}, #{columnNo},
+        #{courseNo},#{courseTitle}, #{content}, #{createDate},#{state}, #{columnNo}
         )
         </if>
     </insert>
 
+    <delete id="deleteByCourseNo">
+        delete from course where course_no=#{courseNo}
+    </delete>
 
     <!--&lt;!&ndash;通过用户ID查找RoleAssignment表&ndash;&gt;-->
     <!--<select id="findOneOfRAByUserId" resultMap="RoleAssignmentMap">-->

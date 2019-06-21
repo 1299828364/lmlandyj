@@ -5,6 +5,10 @@ public enum ResultEnum {
      * 成功
      */
     succese(200,"成功"),
+    CREATE(201,"新建或修改数据成功"),
+    Accepted(202,"请求已排入后台排队"),
+
+
 
     /**
      * 服务器报错

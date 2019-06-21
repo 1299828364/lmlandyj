@@ -2,8 +2,10 @@ package lml.lml.repository;
 
 
 import lml.lml.domain.Course;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -21,19 +23,23 @@ public interface CourseRepository {
      * @param courseNo
      * @return
      */
-    Course getOneByNo(String courseNo);
+    Course findOneByNo(String courseNo);
+
+    /**
+     *
+     * @return
+     * @param courseNo
+     */
+    boolean deleteByCourseNo(@Param("courseNo") String courseNo);
+
 
     /**
      *
      * @return
      */
-    boolean deleteOne();
+    boolean editCourse(Course course);
 
-    /**
-     *
-     * @return
-     */
-    boolean addCourse();
+    List<Course> findByDate(@Param("start") Date start,@Param("end")Date end);
 
 
     /**

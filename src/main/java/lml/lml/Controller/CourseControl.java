@@ -5,10 +5,11 @@ import lml.lml.domain.Course;
 import lml.lml.domain.Result;
 import lml.lml.utils.ResultUtil;
 import lml.lml.service.CourseService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,8 +30,28 @@ CourseService courseService;
      *
      * @return
      */
-    @GetMapping("/api")
+    @GetMapping(value = "/api/v1/courses")
     public Result getAll(){
-        return ResultUtil.success(courseService.findAll());
+        return courseService.findAll();
+    }
+
+    @GetMapping(value = "/api/v1/course")
+    public Result getCourseByDate(@Param("start")Date start,@Param("end")Date end){
+        return courseService.findByDate(start,end);
+    }
+
+    @PostMapping(value = "/api/v1/courses")
+    public Result addRole(@RequestBody Course course){
+        return courseService.addCourse(course);
+    }
+
+    @DeleteMapping(value = "/api/v1/courses")
+    public Result deletebyNo(@Param("courseNo")String courseNo){
+        return courseService.deleteCourse(courseNo);
+    }
+
+    @PutMapping(value = "/api/v1/courses")
+    public Result updateCourse(@RequestBody Course course){
+        return courseService.updateCourse(course);
     }
 }
