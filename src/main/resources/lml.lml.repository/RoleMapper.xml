@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace写对应的接口的全路径-->
+<mapper namespace="lml.lml.repository.RoleRepository">
+    <!--role表-->
+    <resultMap id="RoleMap" type="lml.lml.domain.Role">
+
+        <!--主键-->
+        <result column="role_No" property="roleNo"/>
+
+        <!--普通的东西（列）-->
+        <result column="role_name" property="roleName"/>
+        <result column="super_role" property="super_role"/>
+    </resultMap>
+
+
+    <sql id="Role_Column_List">
+        role_no,role_name,super_role
+    </sql>
+
+    <select id="findAll" resultMap="RoleMap">
+        select <include refid="Role_Column_List"/>
+        from role
+    </select>
+
+
+    <!--通过roleNo查找角色表-->
+    <select id="findOneByNo" resultMap="RoleMap">
+        select <include refid="Role_Column_List"/>
+        from role where role_no=#{roleNo}
+    </select>
+
+
+
+    <insert id="editRole" parameterType="lml.lml.domain.Role">
+        <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">
+            select count(role_no) from role where role_no = #{roleNo}
+        </selectKey>
+        <if test="count > 0">
+            update course
+            <set>
+                role_no=#{roleNo},role_name=#{roleName}
+            </set>
+            <where>
+                role_no = #{roleNo}
+            </where>
+        </if>
+        <if test="count == 0">
+            insert into role (
+            <include refid="Role_Column_List" />
+            )
+            values(
+            #{roleNo},#{roleName}
+            )
+        </if>
+    </insert>
+
+    <delete id="deleteByRoleNo">
+        delete from course where course_no=#{courseNo}
+    </delete>
+
+</mapper>

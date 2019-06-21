@@ -6,11 +6,11 @@
 <!--namespace写对应的接口的全路径-->
 <mapper namespace="lml.lml.repository.CourseRepository">
 
-    <!--wenzhang表-->
+    <!--course表-->
     <resultMap id="CourseMap" type="lml.lml.domain.Course">
 
         <!--主键-->
-        <result column="course_No" property="courseNo"/>
+        <result column="course_no" property="courseNo"/>
 
         <!--普通的东西（列）-->
         <result column="course_title" property="courseTitle"/>
