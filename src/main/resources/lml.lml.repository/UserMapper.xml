@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace写对应的接口的全路径-->
+<mapper namespace="lml.lml.repository.UserRepository">
+    <!--user表-->
+    <resultMap id="UserMap" type="lml.lml.domain.User">
+
+        <!--主键-->
+        <result column="user_No" property="userNo"/>
+
+        <!--普通的东西（列）-->
+        <result column="user_name" property="userName"/>
+        <result column="user_account" property="userAccount"/>
+        <result column="password" property="password"/>
+        <result column="emil" property="emil"/>
+        <result column="role_no" property="roleNo"/>
+    </resultMap>
+
+
+    <sql id="User_Column_List">
+        user_no,user_name,user_account,password,emil,role_no
+    </sql>
+
+    <select id="findAll" resultMap="UserMap">
+        select <include refid="User_Column_List"/>
+        from user
+    </select>
+
+
+    <!--通过UserNo查找用户表-->
+    <select id="findOneByNo" resultMap="UserMap">
+        select <include refid="User_Column_List"/>
+        from user where user_no=#{userNo}
+    </select>
+
+
+
+    <insert id="editUser" parameterType="lml.lml.domain.User">
+        <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">
+            select count(user_no) from user where user_no = #{userNo}
+        </selectKey>
+        <if test="count > 0">
+            update course
+            <set>
+                user_no=#{userNo},user_name=#{userName},user_account=#{userAccount},password=#{password},
+                emil=#{emil},role_no=#{roleNo}
+            </set>
+            <where>
+                user_no = #{userNo}
+            </where>
+        </if>
+        <if test="count == 0">
+            insert into user (
+            <include refid="User_Column_List" />
+            )
+            values(
+            #{userNo},#{userName},#{userAccount},#{password},
+            #{emil},#{roleNo}
+            )
+        </if>
+    </insert>
+
+    <delete id="deleteByUserNo">
+        delete from course where course_no=#{courseNo}
+    </delete>
+
+</mapper>

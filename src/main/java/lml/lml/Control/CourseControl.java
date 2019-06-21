@@ -1,16 +1,14 @@
-package lml.lml.Controller;
+package lml.lml.Control;
 
 
 import lml.lml.domain.Course;
 import lml.lml.domain.Result;
-import lml.lml.utils.ResultUtil;
 import lml.lml.service.CourseService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 
 /**

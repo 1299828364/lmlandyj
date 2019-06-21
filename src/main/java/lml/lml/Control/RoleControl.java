@@ -1,4 +1,4 @@
-package lml.lml.Controller;
+package lml.lml.Control;
 
 import lml.lml.domain.Role;
 import lml.lml.domain.Result;
@@ -7,10 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @RestController
-public class RoleContrller {
+public class RoleControl {
     
     @Autowired
     RoleServiceImpl roleService;

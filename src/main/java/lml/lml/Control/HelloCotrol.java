@@ -1,7 +1,6 @@
-package lml.lml.Controller;
+package lml.lml.Control;
 
 
-import lml.lml.domain.Course;
 import lml.lml.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
