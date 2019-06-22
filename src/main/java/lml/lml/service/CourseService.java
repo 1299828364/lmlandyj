@@ -16,7 +16,7 @@ public interface CourseService {
      *
      * @return
      */
-    Result findAll();
+    Result findAll( );
 
     /**
      *

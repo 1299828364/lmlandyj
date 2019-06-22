@@ -100,13 +100,13 @@
     </select>
 
 
-    <!--通过文章No查找角色表-->
+    <!--通过文章No查找文章表-->
     <select id="findOneByNo" resultMap="CourseMap">
         select <include refid="Course_Column_List"/>
         from course where course_no=#{courseNo} order by createDate asc
     </select>
 
-    <!--通过时间查找角色表-->
+    <!--通过时间查找文章表-->
     <select id="findByDate" resultMap="CourseMap">
         select <include refid="Course_Column_List"/>
         from course where createDate>=#{start} and #{end} >= createDate

@@ -28,7 +28,7 @@ CourseService courseService;
      *
      * @return
      */
-    @GetMapping(value = "/api/v1/courses")
+    @GetMapping(value = "/api/v1/courses/{page}")
     public Result getAll(){
         return courseService.findAll();
     }
