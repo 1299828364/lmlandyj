@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace写对应的接口的全路径-->
+<mapper namespace="lml.lml.repository.moduleRepository">
+    <!--module表-->
+    <resultMap id="moduleMap" type="lml.lml.domain.Module">
+
+        <!--主键-->
+        <result column="module_No" property="module"/>
+
+        <!--普通的东西（列）-->
+        <result column="module_name" property="moduleName"/>
+    </resultMap>
+
+
+    <sql id="module_Column_List">
+        module_no,module_name
+    </sql>
+
+    <select id="findAll" resultMap="moduleMap">
+        select <include refid="module_Column_List"/>
+        from module
+    </select>
+
+
+    <!--通过moduleNo查找角色表-->
+    <select id="findOneByNo" resultMap="moduleMap">
+        select <include refid="module_Column_List"/>
+        from module where module_no=#{moduleNo}
+    </select>
+
+
+
+    <insert id="editModule" parameterType="lml.lml.domain.module">
+        <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">
+            select count(module_no) from module where module_no = #{moduleNo}
+        </selectKey>
+        <if test="count > 0">
+            update module
+            <set>
+                module_no=#{moduleNo},module_name=#{moduleName}
+            </set>
+            <where>
+                module_no = #{moduleNo}
+            </where>
+        </if>
+        <if test="count == 0">
+            insert into module (
+            <include refid="module_Column_List" />
+            )
+            values(
+            #{moduleNo},#{moduleName}
+            )
+        </if>
+    </insert>
+
+    <delete id="deleteByModuleNo">
+        delete from module where module_no=#{moduleNo}
+    </delete>
+
+</mapper>

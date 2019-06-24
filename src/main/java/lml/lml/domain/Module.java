@@ -1,14 +1,14 @@
 package lml.lml.domain;
 
 public class Module {
-    private Integer moduleNo;
+    private String moduleNo;
     private String moduleName;
 
-    public Integer getModuleNo() {
+    public String getModuleNo() {
         return moduleNo;
     }
 
-    public void setModuleNo(Integer moduleNo) {
+    public void setModuleNo(String moduleNo) {
         this.moduleNo = moduleNo;
     }
 
