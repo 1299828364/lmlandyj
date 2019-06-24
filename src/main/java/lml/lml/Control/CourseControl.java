@@ -43,6 +43,12 @@ CourseService courseService;
         return courseService.findByDate(start,end);
     }
 
+
+    @GetMapping(value = "/api/v1/courses/{page}")
+    public Result getCourseByPage(@PathVariable("page")String page){
+        return courseService.findByPage(page);
+    }
+
     @PostMapping(value = "/api/v1/courses")
     public Result addRole(@RequestBody Course course){
         return courseService.addCourse(course);

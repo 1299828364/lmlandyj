@@ -36,6 +36,9 @@ public interface CourseService {
      */
     Result deleteCourse(Course course);
 
+
+    Result findByPage(String page);
+
     /**
      *
      * @param courseNo

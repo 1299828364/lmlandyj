@@ -33,4 +33,9 @@ public class UserControl {
     public Result updateRole(@RequestBody User user){
         return userService.updateUser(user);
     }
+
+    @PutMapping(value = "/api/v1/user/{no}")
+    public Result findOne(@PathVariable("no")String userNo){
+        return userService.findOneByNo(userNo);
+    }
 }

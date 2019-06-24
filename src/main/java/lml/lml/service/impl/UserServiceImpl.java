@@ -38,4 +38,14 @@ public class UserServiceImpl implements UserService {
     public Result addRole(User user) {
         return ResultUtil.success(userRepository.editUser(user));
     }
+
+    @Override
+    public boolean loginCheck(User user) {
+        User tempUser=userRepository.findOneByAccount(user.getUserAccount());
+        if (tempUser.getPassword().equals(user.getPassword())){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

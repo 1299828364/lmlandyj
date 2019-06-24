@@ -16,4 +16,6 @@ public interface UserRepository {
     boolean editUser(User user);
 
     boolean deleteByUserNo(@Param("userNo")String userNo);
+
+    User findOneByAccount(@Param("userAccount")String account);
 }

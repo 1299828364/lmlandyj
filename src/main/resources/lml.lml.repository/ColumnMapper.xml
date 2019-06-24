@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper>
+<mapper namespace="lml.lml.repository.ColumnRepository">
     <resultMap id="ColumnMap" type="lml.lml.domain.Column">
         <result column="column_no" property="columnNo"></result>
         <result column="column_name" property="columnName"></result>

@@ -2,9 +2,6 @@ package lml.lml.service;
 
 import lml.lml.domain.Result;
 import lml.lml.domain.User;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 public interface UserService {
 
@@ -17,4 +14,6 @@ public interface UserService {
     Result deleteByUserNo(String userNo);
 
     Result addRole(User user);
+
+    boolean loginCheck(User user);
 }

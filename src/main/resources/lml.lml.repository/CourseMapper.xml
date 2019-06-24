@@ -126,6 +126,11 @@
         from course order by createDate asc
     </select>
 
+    <select id="findByPage" resultMap="CourseMap">
+        select <include refid="Course_Column_List"/>
+        from course limit #{page},10
+    </select>
+
 
     <!--通过文章No查找文章表-->
     <select id="findOneByNo" resultMap="CourseMap">

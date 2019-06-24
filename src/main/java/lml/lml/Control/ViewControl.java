@@ -2,7 +2,9 @@ package lml.lml.Control;
 
 
 import lml.lml.domain.Result;
+import lml.lml.domain.User;
 import lml.lml.service.CourseService;
+import lml.lml.service.UserService;
 import lml.lml.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ public class ViewControl {
 
     @Autowired
     CourseService wenzhangService;
+
+    @Autowired
+    UserService userService;
 
     @ResponseBody
     @GetMapping(value = "/hello")
@@ -57,15 +62,31 @@ public class ViewControl {
         return "index";
     }
 
+    @PostMapping("/loginCheck")
+    public String checkUser(HttpServletRequest req,HttpServletResponse res){
+       User user=new User();
+       String account=req.getParameter("account");
+       String password=req.getParameter("password");
+       user.setUserAccount(account);
+       user.setPassword(password);
+       boolean flag=userService.loginCheck(user);
+       if (flag){
+           req.getSession().setAttribute("account",user.getUserAccount());
+           req.getSession().setAttribute("password",user.getPassword());
+           return "index";
+       }else {
+           return "login";
+       }
+    }
+
     @GetMapping("/course")
     public String course(HttpServletRequest req,HttpServletResponse res){
         req.setAttribute("name","刘明朗");
         return "course";
     }
 
-//    @ResponseBody
-//    @GetMapping("/test")
-//    public List<Course> getAll(){
-//        return wenzhangService.findAll();
-//    }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
 }

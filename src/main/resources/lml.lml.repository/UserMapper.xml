@@ -36,6 +36,12 @@
     </select>
 
 
+    <select id="findOneByAccount" resultMap="UserMap">
+        select <include refid="User_Column_List"/>
+        from user where user_account=#{userAccount}
+    </select>
+
+
 
     <insert id="editUser" parameterType="lml.lml.domain.User">
         <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">

@@ -18,6 +18,8 @@ public interface CourseRepository {
     List<Course> findAll();
 
 
+    List<Course> findByPage(@Param("page")int page);
+
     /**
      *
      * @param courseNo

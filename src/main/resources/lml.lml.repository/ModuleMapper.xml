@@ -3,12 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <!--namespace写对应的接口的全路径-->
-<mapper namespace="lml.lml.repository.moduleRepository">
+<mapper namespace="lml.lml.repository.ModuleRepository">
     <!--module表-->
     <resultMap id="moduleMap" type="lml.lml.domain.Module">
 
         <!--主键-->
-        <result column="module_No" property="module"/>
+        <result column="module_No" property="moduleNo"/>
 
         <!--普通的东西（列）-->
         <result column="module_name" property="moduleName"/>
@@ -33,7 +33,7 @@
 
 
 
-    <insert id="editModule" parameterType="lml.lml.domain.module">
+    <insert id="editModule" parameterType="lml.lml.domain.Module">
         <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">
             select count(module_no) from module where module_no = #{moduleNo}
         </selectKey>
