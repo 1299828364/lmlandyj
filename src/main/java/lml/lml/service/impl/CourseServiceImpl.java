@@ -21,6 +21,7 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseRepository courseRepository;
 
+
     @Override
     public Result findAll() {
         return ResultUtil.success(courseRepository.findAll());
@@ -51,6 +52,22 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result updateCourse(Course course) {
         return ResultUtil.success(courseRepository.editCourse(course));
+    }
+
+    @Override
+    public Result updateState(Course course) {
+        course.setState(course.getState()==1?2:1);
+        return ResultUtil.success(courseRepository.editCourse(course));
+    }
+
+    @Override
+    public Result findCourseWithColumn() {
+        return ResultUtil.success(courseRepository.findCourseWithColumn());
+    }
+
+    @Override
+    public Result findOneByNo(String no) {
+        return ResultUtil.success(courseRepository.findOneByNo(no));
     }
 
 

@@ -18,6 +18,26 @@
         <result column="createDate" jdbcType="TIMESTAMP" property="createDate" javaType="java.util.Date"/>
         <result column="state" property="state"/>
         <result column="column_no" property="columnNo"/>
+        <result column="grade" property="grade"/>
+        <result column="author" property="author"/>
+
+    </resultMap>
+
+    <!--course表-->
+    <resultMap id="CourseWithColumnMap" type="lml.lml.domain.Course">
+
+        <!--主键-->
+        <result column="course_no" property="courseNo"/>
+
+        <!--普通的东西（列）-->
+        <result column="course_title" property="courseTitle"/>
+        <result column="content" property="content"/>
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate" javaType="java.util.Date"/>
+        <result column="state" property="state"/>
+        <result column="column_no" property="columnNo"/>
+        <result column="grade" property="grade"/>
+        <result column="author" property="author"/>
+        <result column="column_name" property="columnName"/>
 
     </resultMap>
 
@@ -67,8 +87,9 @@
 
     <!--course表的列集-->
     <sql id="Course_Column_List">
-        course_no,course_title,content,createDate,state,column_no
+        course_no,course_title,content,createDate,state,column_no,grade,author
     </sql>
+
 
     <!--&lt;!&ndash;role_assignment的列集&ndash;&gt;-->
     <!--<sql id="Role_Assignment_Column_List">-->
@@ -92,6 +113,12 @@
         <!--FROM role m JOIN role_assignment l-->
         <!--on m.id=#{id} and m.id=l.role_id;-->
     <!--</select>-->
+
+    <select id="findCourseWithColumn" resultMap="CourseWithColumnMap">
+        SELECT m.*,l.column_name
+        from course m JOIN `column` l
+        on m.column_no = l.column_no
+    </select>
 
     <!--查找所有文章-->
     <select id="findAll" resultMap="CourseMap">
@@ -134,7 +161,7 @@
         <include refid="Course_Column_List" />
         )
         values(
-        #{courseNo},#{courseTitle}, #{content}, #{createDate},#{state}, #{columnNo}
+        #{courseNo},#{courseTitle}, #{content}, #{createDate},#{state}, #{columnNo},#{grade},#{author}
         )
         </if>
     </insert>

@@ -28,9 +28,14 @@ CourseService courseService;
      *
      * @return
      */
-    @GetMapping(value = "/api/v1/courses/{page}")
+    @GetMapping(value = "/api/v1/courses")
     public Result getAll(){
         return courseService.findAll();
+    }
+
+    @GetMapping(value = "/api/v1/course/{data}")
+    public Result getOne(@PathVariable("data") String no){
+        return courseService.findOneByNo(no);
     }
 
     @GetMapping(value = "/api/v1/course")
@@ -51,5 +56,16 @@ CourseService courseService;
     @PutMapping(value = "/api/v1/courses")
     public Result updateCourse(@RequestBody Course course){
         return courseService.updateCourse(course);
+    }
+
+    @PutMapping(value = "/api/v1/courses/state")
+    public Result updateState(@RequestBody Course course){
+        return courseService.updateState(course);
+    }
+
+
+    @GetMapping("/api/v1/courseWithColumnName")
+    public Result test1(){
+        return courseService.findCourseWithColumn();
     }
 }

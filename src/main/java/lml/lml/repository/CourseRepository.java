@@ -47,4 +47,6 @@ public interface CourseRepository {
      * @return
      */
     boolean dispatchCourse();
+
+    List findCourseWithColumn();
 }

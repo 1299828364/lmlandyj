@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Controller
-public class ViewCotrol {
+public class ViewControl {
 
     @Autowired
     CourseService wenzhangService;
@@ -33,7 +33,7 @@ public class ViewCotrol {
     @ResponseBody
     @GetMapping(value = "/api/v1/test1")
     public List tets(){
-        return (List) wenzhangService.findAll().getData();
+        return (List) wenzhangService.findCourseWithColumn().getData();
     }
 
     @ResponseBody

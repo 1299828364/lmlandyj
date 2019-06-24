@@ -46,4 +46,9 @@ public interface CourseService {
 
     Result updateCourse(Course course);
 
+    Result updateState(Course course);
+
+    Result findCourseWithColumn();
+
+    Result findOneByNo(String no);
 }

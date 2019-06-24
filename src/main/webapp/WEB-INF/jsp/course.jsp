@@ -20,8 +20,50 @@
 <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.0/dist/bootstrap-table.min.css">
 <script src="https://unpkg.com/bootstrap-table@1.15.0/dist/bootstrap-table.min.js"></script>
 <body>
+<style>
+    textarea{
+        width: 200px;
+        height: 200px;
+        white-space: pre-line;
+    }
+</style>
 
 <table id="ArbetTable"></table>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    标题
+                </h4>
+            </div>
+            <div id="modal-content" class="modal-body">
+                <input title="courseNo"  id="course-no" class="show-info" disabled><br/>
+                <input title="courseNo" id="course-title" class="show-info"><br/>
+                <textarea cols="30" rows="5" title="content" id="course-content" class="show-info"></textarea><br/>
+                <input title="courseCreate" id="course-createDate" class="show-info" disabled><br/>
+                <input title="courseState" id="state" class="show-info" disabled>
+            </div>
+            <div class="modal-footer">
+
+                <button id="save-btn" onclick="doAdd()" type="button" class="btn btn-primary">
+                    保存
+                </button>
+                <button id="update-btn" onclick="doUpdate()" type="button" class="btn btn-primary">
+                    提交更改
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 </body>
 </html>
@@ -67,28 +109,32 @@
                 detailView: false,                   //是否显示父子表
                 columns: [
                     {
-                        field: 'courseNo',
-                        title: '文章编号',
-                        formatter:courseNoFormatter,
-                        width:200
-                    }, {
+                        checkbox: true,
+                        visible: true
+                    },
+
+                    {
                         field: 'courseTitle',
                         title: '文章标题',
-                        formatter:courseTitleFormatter
+                        width: 300
                     }, {
-                        field: 'content',
-                        title: '正文',
-                        formatter: contentFormatter
-                    },
-                    {
-                        field: 'createDate',
-                        title: '创建时间'
+                        field: 'author',
+                        title: '作者',
+                        width: 100
                     },{
-                        field:'state',
-                        title: '状态',
-                    },
-                    {
-                        field: 'state',
+                        field: 'columnName',
+                        title: '栏目名称',
+                        width: 200
+                    }, {
+                        field: 'createDate',
+                        title: '创建时间',
+                        width: 150
+                    }, {
+                        field: 'grade',
+                        title: '是否置顶',
+                        formatter: gradeFormatter
+                    }, {
+                        field: 'courseNo',
                         title: '操作',
                         formatter: operateFormatter //自定义方法，添加操作按钮
                     }
@@ -119,32 +165,22 @@
         return oTableInit;
     };
 
-    function courseNoFormatter(value) {
-        return "<span style='text-align: center'>"+value+"</sapn>"
-    }
+    function gradeFormatter(value) {
+        if (value==1){
+            return "<span style='text-align: center'>否</sapn>"
+        } else {
+            return "<span style='text-align: center'>是</sapn>"
+        }
 
-    function courseTitleFormatter(value) {
-        return "<span style='text-align: center'>"+value+"</sapn>"
-    }
-
-    function contentFormatter(value) {
-
-        return"<textarea>"+value+"</textarea>"
     }
 
 
     function operateFormatter(value, row, index) {//赋予的参数
-        var useOrNo='';
-        if(value==1){
-            useOrNo='<a class="btn active" href="#">启用</a>';
-        }else {
-            useOrNo='<a class="btn active" href="#">停用</a>';
-        }
-
+        var courseNo=value;
         return [
-            '<a class="btn active disabled" href="#">编辑</a>',
-            useOrNo,
-            '<a class="btn btn-default" href="#">删除</a>'
+            '<button class="btn active" onclick="look("'+value+'")">查看</button>',
+            '<button class="btn active" onclick="edit("'+value+'")">编辑</button>',
+            '<button class="btn btn-default" onclick="remove("'+value+'") href="#">删除</button>'
         ].join('');
     }
 
@@ -155,5 +191,65 @@
     console.log(temp.tagName);
     console.log(temp.children[0].tagName);
 
+    function edit(id) {
+        var course=send('get','','api/v1');
+        showModal();
+        var modalContent=document.getElementById("modal-content");
+        putInfo(element);
+    }
+
+    function showInfo(id) {
+
+    }
+
+    function remove(id) {
+
+    }
+
+    function look() {
+
+    }
+
+    function putInfo(element) {
+        var tr=element.parentNode.parentNode;
+        var infos=document.getElementsByClassName("show-info");
+        for (var i=0;i<5;i++) {
+            if(i==2){
+                infos[i].innerText=tr.children[i].children[0].innerHTML;
+                continue
+            }
+            infos[i].value=tr.children[i].innerText;
+        }
+
+    }
+
+    function showModal(){
+        $('#myModal').modal('show')
+    }
+
+
+
+    function send(type,data,url,flag){
+        alert("开始");
+        $.ajax({
+            type: type,
+            url: url,
+            data: {data:data},
+            dataType: "json",
+            success: function(data){
+                // 根据flag判断请求类型若为非1则为请求数据
+                if(flag==1){
+                    window.location.reload();
+                }else {
+                    return data;
+                }
+
+            },
+            error:function (data) {
+                console.log(data)
+            }
+        });
+
+    }
 
 </script>
