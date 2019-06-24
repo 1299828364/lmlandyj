@@ -13,4 +13,6 @@ public interface PowerService {
     Result updatePower(Power power);
 
     Result addPower(Power power);
+
+    Result findOneByNo(String powerNo);
 }

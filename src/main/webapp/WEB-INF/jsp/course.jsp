@@ -22,13 +22,19 @@
 <body>
 <style>
     textarea{
-        width: 200px;
-        height: 200px;
+        width: 400px;
+        height: 400px;
         white-space: pre-line;
+    }
+
+    #modal-content input{
+        width: 400px;
     }
 </style>
 
-<table id="ArbetTable"></table>
+<div></div>
+<table id="courseTable"></table>
+
 
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -43,17 +49,22 @@
                 </h4>
             </div>
             <div id="modal-content" class="modal-body">
-                <input title="courseNo"  id="course-no" class="show-info" disabled><br/>
-                <input title="courseNo" id="course-title" class="show-info"><br/>
+                <span>文章标题</span><br>
+                <input title="courseTitle"  id="course-title" class="show-info" disabled><br>
+                <span>文章作者</span><br>
+                <input title="courseAuthor" id="author" class="show-info" disabled><br/>
+                <span>文章内容</span><br>
                 <textarea cols="30" rows="5" title="content" id="course-content" class="show-info"></textarea><br/>
+                <span>创建时间</span><br>
                 <input title="courseCreate" id="course-createDate" class="show-info" disabled><br/>
-                <input title="courseState" id="state" class="show-info" disabled>
+                <span>栏目名称</span><br>
+                <input title="courseState" id="column-name" class="show-info" disabled>
             </div>
             <div class="modal-footer">
 
-                <button id="save-btn" onclick="doAdd()" type="button" class="btn btn-primary">
-                    保存
-                </button>
+                <%--<button id="save-btn" onclick="doAdd()" type="button" class="btn btn-primary">--%>
+                    <%--保存--%>
+                <%--</button>--%>
                 <button id="update-btn" onclick="doUpdate()" type="button" class="btn btn-primary">
                     提交更改
                 </button>
@@ -70,100 +81,15 @@
 <script rel="script">
     // alert("hello world");
 
-    $(function () {
-        //1.初始化Table
-        var oTable = new TableInit();
-        oTable.Init();
-    });
+    function init() {
+        send('get','','api/v1/courses',2);
+        var data=tempData.data;
+        var ths=[]
+        for (var i = 0;i<data.length;i++){
+            ths.push(document.createElement("td"));
+        }
 
-
-    var TableInit = function () {
-        var oTableInit = new Object();
-        //初始化Table
-        oTableInit.Init = function () {
-            $('#ArbetTable').bootstrapTable({
-                url: '/api/v1/test1',         //请求后台的URL（*）
-                method: 'get',                      //请求方式（*）
-                toolbar: '#toolbar',                //工具按钮用哪个容器
-                striped: true,                      //是否显示行间隔色
-                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-                pagination: true,                   //是否显示分页（*）
-                sortable: false,                     //是否启用排序
-                sortOrder: "asc",                   //排序方式
-                queryParams: oTableInit.queryParams,//传递参数（*）
-                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
-                pageNumber: 1,                       //初始化加载第一页，默认第一页
-                pageSize: 10,                       //每页的记录行数（*）
-                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
-                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-                contentType: "application/x-www-form-urlencoded",
-                strictSearch: true,
-                showColumns: true,                  //是否显示所有的列
-                showRefresh: true,                  //是否显示刷新按钮
-                minimumCountColumns: 2,             //最少允许的列数
-                clickToSelect: true,                //是否启用点击选中行
-                height: 700,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-                uniqueId: "no",                     //每一行的唯一标识，一般为主键列
-                showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
-                cardView: false,                    //是否显示详细视图
-                detailView: false,                   //是否显示父子表
-                columns: [
-                    {
-                        checkbox: true,
-                        visible: true
-                    },
-
-                    {
-                        field: 'courseTitle',
-                        title: '文章标题',
-                        width: 300
-                    }, {
-                        field: 'author',
-                        title: '作者',
-                        width: 100
-                    },{
-                        field: 'columnName',
-                        title: '栏目名称',
-                        width: 200
-                    }, {
-                        field: 'createDate',
-                        title: '创建时间',
-                        width: 150
-                    }, {
-                        field: 'grade',
-                        title: '是否置顶',
-                        formatter: gradeFormatter
-                    }, {
-                        field: 'courseNo',
-                        title: '操作',
-                        formatter: operateFormatter //自定义方法，添加操作按钮
-                    }
-                ],
-                rowStyle: function (row, index) {
-                    var classesArr = ['success', 'info'];
-                    var strclass = "";
-                    if (index % 2 === 0) {//偶数行
-                        strclass = classesArr[0];
-                    } else {//奇数行
-                        strclass = classesArr[1];
-                    }
-                    return { classes: strclass };
-                },//隔行变色
-            });
-
-        };
-
-
-        //得到查询的参数
-        oTableInit.queryParams = function (params) {
-            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                limit: params.limit,   //页面大小
-                offset:params.offset
-            };
-            return temp;
-        };
-        return oTableInit;
-    };
+    }
 
     function gradeFormatter(value) {
         if (value==1){
@@ -178,35 +104,54 @@
     function operateFormatter(value, row, index) {//赋予的参数
         var courseNo=value;
         return [
-            '<button class="btn active" onclick="look("'+value+'")">查看</button>',
-            '<button class="btn active" onclick="edit("'+value+'")">编辑</button>',
-            '<button class="btn btn-default" onclick="remove("'+value+'") href="#">删除</button>'
+            '<button class="btn btn-default" onclick="look('+''+value+''+')">查看</button>',
+            '<button class="btn btn-default" onclick="edit('+''+value+''+')">编辑</button>',
+            '<button class="btn btn-default" onclick="remove('+''+value+''+')" href="#">删除</button>'
         ].join('');
     }
-
-    var temp=document.getElementsByClassName("success");
-    console.log(temp[0]);
-    console.log(temp[0].childNodes[0].tagName);
-    console.log(temp[0].childNodes[0]);
-    console.log(temp.tagName);
-    console.log(temp.children[0].tagName);
+    //
+    // var temp=document.getElementsByClassName("success");
+    // console.log(temp[0]);
+    // console.log(temp[0].childNodes[0].tagName);
+    // console.log(temp[0].childNodes[0]);
+    // console.log(temp.tagName);
+    // console.log(temp.children[0].tagName);
 
     function edit(id) {
-        var course=send('get','','api/v1');
-        showModal();
-        var modalContent=document.getElementById("modal-content");
-        putInfo(element);
+        document.getElementById("course-content").readOnly=false;
+
+        look(id);
+        $('#update-btn').toggle();
     }
 
-    function showInfo(id) {
-
+    function showInfo(data) {
+        clearModel();
+        "".split();
+        document.getElementById("course-title").value=data.courseTitle;
+        document.getElementById("author").value=data.author;
+        document.getElementById("course-content").innerHTML=data.content;
+        document.getElementById("course-createDate").value=data.createDate.split(".")[0];
+        document.getElementById("column-name").value=1;
+        showModal();
     }
 
     function remove(id) {
 
     }
 
-    function look() {
+    function clearModel() {
+        document.getElementById("course-title").value='';
+        document.getElementById("author").value='';
+        document.getElementById("course-content").innerHTML='';
+        document.getElementById("course-createDate").value='';
+        document.getElementById("column-name").value='';
+    }
+
+    function look(id) {
+        document.getElementById("course-content").readOnly='true';
+        $('#update-btn').hide();
+        send('get','','api/v1/course/'+id+'',2);
+        showInfo(tempData.data);
 
     }
 
@@ -224,32 +169,59 @@
     }
 
     function showModal(){
+
         $('#myModal').modal('show')
     }
 
 
 
     function send(type,data,url,flag){
-        alert("开始");
-        $.ajax({
-            type: type,
-            url: url,
-            data: {data:data},
-            dataType: "json",
-            success: function(data){
-                // 根据flag判断请求类型若为非1则为请求数据
-                if(flag==1){
-                    window.location.reload();
-                }else {
-                    return data;
-                }
 
-            },
-            error:function (data) {
-                console.log(data)
-            }
-        });
+        if (type=='get'){
+            $.ajax({
+                type: type,
+                url: url,
+                dataType: "json",
+                async:false,
+                success: function(data){
+                    // 根据flag判断请求类型若为2则为请求数据
+                    if(flag==2){
+                        console.log(data);
+                        tempData=data;
+                    }else {
+                        window.location.reload();
+                    }
+
+                },
+                error:function (data) {
+                    // console.log(data)
+                    console.log('error')
+                }
+            });
+
+        } else {
+            $.ajax({
+                type: type,
+                url: url,
+                data: {data:data},
+                dataType: "json",
+                success: function(data){
+                    // 根据flag判断请求类型若为非1则为请求数据
+                    if(flag==1){
+                        window.location.reload();
+                    }else {
+                        return data;
+                    }
+
+                },
+                error:function (data) {
+                    console.log(data)
+                }
+            });
+
+        }
 
     }
 
+    var tempData;
 </script>

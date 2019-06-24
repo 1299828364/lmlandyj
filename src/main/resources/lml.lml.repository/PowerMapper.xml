@@ -38,7 +38,7 @@
             select count(power_no) from power where power_no = #{powerNo}
         </selectKey>
         <if test="count > 0">
-            update course
+            update power
             <set>
                 power_no=#{powerNo},power_name=#{powerName}
             </set>

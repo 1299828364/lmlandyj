@@ -1,14 +1,14 @@
 package lml.lml.domain;
 
 public class Power {
-    private Integer powerNo;
+    private String powerNo;
     private String powerName;
 
-    public Integer getPowerNo() {
+    public String getPowerNo() {
         return powerNo;
     }
 
-    public void setPowerNo(Integer powerNo) {
+    public void setPowerNo(String powerNo) {
         this.powerNo = powerNo;
     }
 

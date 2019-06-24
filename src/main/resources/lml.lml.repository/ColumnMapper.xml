@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper>
+    <resultMap id="ColumnMap" type="lml.lml.domain.Column">
+        <result column="column_no" property="columnNo"></result>
+        <result column="column_name" property="columnName"></result>
+    </resultMap>
+
+    <sql id="Column_Column_List">
+        column_no,column_name
+    </sql>
+
+
+
+    <select id="findAll" resultMap="ColumnMap">
+        select <include refid="Column_Column_List"/>
+        from `column`
+    </select>
+
+
+    <!--通过powerNo查找角色表-->
+    <select id="findOneByNo" resultMap="ColumnMap">
+        select <include refid="Column_Column_List"/>
+        from `column` where column_no=#{columnNo}
+    </select>
+
+
+
+    <insert id="editColumn" parameterType="lml.lml.domain.Column">
+        <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">
+            select count(column_no) from `column` where column_no = #{powerNo}
+        </selectKey>
+        <if test="count > 0">
+            update `column`
+            <set>
+                column_no=#{columnNo},column_name=#{columnName}
+            </set>
+            <where>
+                column_no = #{columnNo}
+            </where>
+        </if>
+        <if test="count == 0">
+            insert into `column` (
+            <include refid="Column_Column_List" />
+            )
+            values(
+            #{columnNo},#{columnName}
+            )
+        </if>
+    </insert>
+
+    <delete id="deleteByColumnNo">
+        delete from `column` where power_no=#{powerNo}
+    </delete>
+</mapper>
