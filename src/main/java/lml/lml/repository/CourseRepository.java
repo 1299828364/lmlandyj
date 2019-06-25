@@ -51,4 +51,6 @@ public interface CourseRepository {
     boolean dispatchCourse();
 
     List findCourseWithColumn();
+
+    List findCourseWithColumnByPage(@Param("page")int page);
 }

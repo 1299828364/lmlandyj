@@ -54,4 +54,6 @@ public interface CourseService {
     Result findCourseWithColumn();
 
     Result findOneByNo(String no);
+
+    Result findCourseWithColumnByPage(String page);
 }

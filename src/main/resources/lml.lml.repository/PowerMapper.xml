@@ -8,7 +8,7 @@
     <resultMap id="PowerMap" type="lml.lml.domain.Power">
 
         <!--主键-->
-        <result column="power_No" property="power"/>
+        <result column="power_No" property="powerNo"/>
 
         <!--普通的东西（列）-->
         <result column="power_name" property="powerName"/>
@@ -31,6 +31,11 @@
         from power where power_no=#{powerNo}
     </select>
 
+    <select id="findByRoleNo" resultMap="PowerMap">
+        select power.power_no,power.power_name
+        from power join power_role
+        where power.power_no=power_role.power_no and power_role.role_no=#{roleNo}
+    </select>
 
 
     <insert id="editPower" parameterType="lml.lml.domain.Power">

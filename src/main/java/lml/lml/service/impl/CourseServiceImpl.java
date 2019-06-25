@@ -3,6 +3,7 @@ package lml.lml.service.impl;
 
 import lml.lml.domain.Course;
 import lml.lml.domain.Result;
+import lml.lml.repository.ColumnRepository;
 import lml.lml.utils.*;
 import lml.lml.repository.CourseRepository;
 import lml.lml.service.CourseService;
@@ -21,6 +22,8 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    ColumnRepository columnRepository;
 
     @Override
     public Result findAll() {
@@ -79,6 +82,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result findOneByNo(String no) {
         return ResultUtil.success(courseRepository.findOneByNo(no));
+    }
+
+    @Override
+    public Result findCourseWithColumnByPage(String page) {
+        int tempPage=Integer.valueOf(page);
+        if(tempPage==0){
+            tempPage=tempPage;
+        }else {
+            tempPage=tempPage*10-1;
+        }
+        return ResultUtil.success(courseRepository.findCourseWithColumnByPage(tempPage));
     }
 
 

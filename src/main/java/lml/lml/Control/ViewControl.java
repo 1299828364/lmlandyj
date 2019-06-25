@@ -85,6 +85,12 @@ public class ViewControl {
         return "course";
     }
 
+    @GetMapping("/power")
+    public String power(HttpServletRequest req,HttpServletResponse res){
+        req.setAttribute("name","刘明朗");
+        return "power";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "login";

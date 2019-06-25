@@ -3,6 +3,7 @@ package lml.lml.domain;
 public class Power {
     private String powerNo;
     private String powerName;
+    private Integer count;
 
     public String getPowerNo() {
         return powerNo;

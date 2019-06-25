@@ -3,6 +3,7 @@ package lml.lml.domain;
 public class Module {
     private String moduleNo;
     private String moduleName;
+    private Integer count;
 
     public String getModuleNo() {
         return moduleNo;

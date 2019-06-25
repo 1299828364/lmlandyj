@@ -8,12 +8,12 @@ public class Course {
     private String content;
     private Date createDate;
     private Integer state;
-    private Integer columnNo;
+    private String columnNo;
     private Integer count;
     private String author;
     private String grade;
-
     private String columnName;
+
 
     public String getCourseNo() {
         return courseNo;
@@ -55,14 +55,13 @@ public class Course {
         this.courseTitle = courseTitle;
     }
 
-    public Integer getColumnNo() {
+    public String getColumnNo() {
         return columnNo;
     }
 
-    public void setColumnNo(Integer columnNo) {
+    public void setColumnNo(String columnNo) {
         this.columnNo = columnNo;
     }
-
 
     public String getAuthor() {
         return author;

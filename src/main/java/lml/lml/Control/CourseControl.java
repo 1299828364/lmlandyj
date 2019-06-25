@@ -74,4 +74,9 @@ CourseService courseService;
     public Result test1(){
         return courseService.findCourseWithColumn();
     }
+
+    @GetMapping("/api/v1/courseWithColumnName/{page}")
+    public Result test2(@PathVariable("page")String page){
+        return courseService.findCourseWithColumnByPage(page);
+    }
 }

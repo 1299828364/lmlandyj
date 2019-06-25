@@ -117,7 +117,7 @@
                         <div id="collapseTwo" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="jgdx1.aspx" target="mainFrame">权限管理</a></li>
+                                    <li><a href="/power" target="mainFrame">权限管理</a></li>
                                     <li><a href="ghsgl.aspx" target="mainFrame">模块管理</a></li>
                                     <li><a href="ghsgl.aspx" target="mainFrame">角色分配</a></li>
                                     <li><a href="ghsgl.aspx" target="mainFrame">人员管理</a></li>

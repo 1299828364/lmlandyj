@@ -2,6 +2,7 @@ package lml.lml.Control;
 
 
 import lml.lml.domain.Power;
+import lml.lml.domain.PowerAndRole;
 import lml.lml.domain.Result;
 import lml.lml.service.PowerService;
 import org.apache.ibatis.annotations.Param;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class PowerControl {
     @Autowired
     PowerService powerService;
+
 
     @GetMapping(value = "/api/v1/powers")
     public Result getAll(){
@@ -36,5 +38,19 @@ public class PowerControl {
     @PutMapping(value = "/api/v1/powers")
     public Result updatepower(@RequestBody Power power){
         return powerService.updatePower(power);
+    }
+
+    @GetMapping(value = "/api/v1/powers/{roleNo}")
+    public Result findBYRoleNo(@PathVariable("roleNo") String roleNo){
+        return powerService.findByRoleNo(roleNo);
+    }
+
+    /**
+     * 分配权限
+     * @return
+     */
+    @PutMapping(value = "/api/v1/powerAndRole")
+    public Result setPower(@RequestBody PowerAndRole powerAndRole){
+        return powerService.setPower(powerAndRole);
     }
 }

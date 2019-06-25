@@ -17,4 +17,7 @@ public interface PowerRepository {
     boolean editPower(Power power);
 
     boolean deleteByPowerNo(@Param("PowerNo")String powerNo);
+
+    List<Power> findByRoleNo(@Param("roleNo")String roleNo);
+
 }

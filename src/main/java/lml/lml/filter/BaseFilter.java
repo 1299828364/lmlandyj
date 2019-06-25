@@ -60,8 +60,7 @@ public class BaseFilter  implements Filter {
                 User user=new User();
                 user.setUserAccount(id);
                 user.setPassword(pw);
-                String url="/loginCheck";
-                if(url.equals(userService.loginCheck(user))){
+                if(userService.loginCheck(user)){
                     System.out.println("xxxxxx是"+request.getSession().getAttribute("1"));
                     filterChain.doFilter(servletRequest, servletResponse);
                 }else {

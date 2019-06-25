@@ -32,8 +32,27 @@
     }
 </style>
 
-<div></div>
-<table id="courseTable"></table>
+<input type="button" value="新增" onclick="add()" id="add">
+<input type="button" value="删除" onclick="remove()" id="delete">
+<table class="table table-hover table-striped" id="courseTable">
+   <thead>
+    <th><input type="checkbox" id="rem-all"></th>
+    <th>文章标题</th>
+    <th>作者</th>
+    <th>栏目名称</th>
+    <th>创建时间</th>
+    <th>操作</th>
+   </thead>
+    <tbody id="tbody">
+
+    </tbody>
+</table>
+<p>
+    <span>当前页数:</span>
+    <span id="page"></span>
+    <span><input type="button" onclick="nextPage()" value="下一页"></span>
+    <span><input type="button" onclick="lastPage()" value="上一页"></span>
+</p>
 
 
 <!-- 模态框（Modal） -->
@@ -81,14 +100,70 @@
 <script rel="script">
     // alert("hello world");
 
-    function init() {
-        send('get','','api/v1/courses',2);
-        var data=tempData.data;
-        var ths=[]
-        for (var i = 0;i<data.length;i++){
-            ths.push(document.createElement("td"));
-        }
+    page=0;
+    start();
 
+
+    function init(data) {
+
+        var tbody=document.getElementById("tbody");
+
+        // var childs=tbody.childNodes;
+        // for (var k=childs.length-1;k>=0;k--){
+        //     tbody.removeChild(childs[i]);
+        // }
+
+        $("#tbody").empty();
+        for (var i = 0;i<data.length;i++){
+            var tr=document.createElement("tr");
+
+            var checkbox=document.createElement("td");
+            checkbox.innerHTML="<input type='checkbox' id='rem'/>"
+            tr.appendChild(checkbox);
+            var td1=document.createElement("td");
+            var td2=document.createElement("td");
+            var td3=document.createElement("td");
+            var td4=document.createElement("td");
+            var td5=document.createElement("td");
+            td1.innerText=data[i]['courseTitle'];
+            td2.innerText=data[i]['author'];
+            td3.innerText=data[i]['columnName'];
+            td4.innerText=data[i]['createDate'];
+            td5.innerHTML="<input type='button' onclick='remove("+data[i]['courseNo']+")' value='删除'/> <input type='button' onclick='edit("+data[i]['courseNo']+")' value='修改'/>";
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            tr.appendChild(td5);
+
+            tbody.appendChild(tr);
+        }
+    }
+
+    function nextPage() {
+        page++;
+        send('get','','api/v1/courseWithColumnName/'+page,2);
+        var data=tempData.data;
+        if(data.length==0){
+            page--;
+
+        }
+        start()
+    }
+
+    function lastPage() {
+        if (page!=0){
+            page--;
+            start();
+        }else {
+            alert("没有上一页了");
+        }
+    }
+
+    function start() {
+        send('get','','api/v1/courseWithColumnName/'+page,2);
+        var data=tempData.data;
+        init(data);
     }
 
     function gradeFormatter(value) {
@@ -101,14 +176,14 @@
     }
 
 
-    function operateFormatter(value, row, index) {//赋予的参数
-        var courseNo=value;
-        return [
-            '<button class="btn btn-default" onclick="look('+''+value+''+')">查看</button>',
-            '<button class="btn btn-default" onclick="edit('+''+value+''+')">编辑</button>',
-            '<button class="btn btn-default" onclick="remove('+''+value+''+')" href="#">删除</button>'
-        ].join('');
-    }
+    // function operateFormatter(value, row, index) {//赋予的参数
+    //     var courseNo=value;
+    //     return [
+    //         '<button class="btn btn-default" onclick="look('+''+value+''+')">查看</button>',
+    //         '<button class="btn btn-default" onclick="edit('+''+value+''+')">编辑</button>',
+    //         '<button class="btn btn-default" onclick="remove('+''+value+''+')" href="#">删除</button>'
+    //     ].join('');
+    // }
     //
     // var temp=document.getElementsByClassName("success");
     // console.log(temp[0]);
@@ -125,6 +200,7 @@
     }
 
     function showInfo(data) {
+        console.log(data)
         clearModel();
         "".split();
         document.getElementById("course-title").value=data.courseTitle;

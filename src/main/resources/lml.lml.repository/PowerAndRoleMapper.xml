@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="lml.lml.repository.PowerAndRoleRepository">
+    <!--Power表-->
+    <resultMap id="PowerAndRoleMap" type="lml.lml.domain.PowerAndRole">
+
+        <!--主键-->
+        <result column="no" property="no"/>
+
+        <!--普通的东西（列）-->
+        <result column="role_no" property="roleNo"/>
+        <result column="power_no" property="powerNo"/>
+    </resultMap>
+
+    <sql id="Power_Role_Column_List">
+        no,role_no,power_no
+    </sql>
+
+    <insert id="edit" parameterType="lml.lml.domain.PowerAndRole">
+        <selectKey keyProperty="count" resultType="java.lang.Integer" order="BEFORE">
+            select count(no) from power_role where no = #{no}
+        </selectKey>
+        <if test="count > 0">
+            update power_role
+            <set>
+                power_no=#{powerNo},role_no=#{roleNo}
+            </set>
+            <where>
+                no=#{no}
+            </where>
+        </if>
+        <if test="count == 0">
+            insert into power_role (
+            <include refid="Power_Role_Column_List" />
+            )
+            values(
+            #{no},#{roleNo},#{powerNo}
+            )
+        </if>
+    </insert>
+
+    <select id="findAll" resultMap="PowerAndRoleMap">
+        select <include refid="Power_Role_Column_List"/>
+        from power_role
+    </select>
+
+    <delete id="remove">
+        delete from power_role where power_no=#{powerNo} and role_no=#{roleNo}
+    </delete>
+
+    <select id="findByRoleNo" resultMap="PowerAndRoleMap">
+        select <include refid="Power_Role_Column_List"/> from power_role where role_no=#{roleNo}
+    </select>
+
+
+</mapper>
