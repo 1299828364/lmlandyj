@@ -15,6 +15,10 @@
         <result column="super_role" property="super_role"/>
     </resultMap>
 
+    <select id="findByPage" resultMap="RoleMap">
+        select <include refid="Role_Column_List"/>
+        from role createDate asc limit #{page},10
+    </select>
 
     <sql id="Role_Column_List">
         role_no,role_name,super_role

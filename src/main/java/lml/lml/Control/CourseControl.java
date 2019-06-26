@@ -38,9 +38,9 @@ CourseService courseService;
         return courseService.findOneByNo(no);
     }
 
-    @GetMapping(value = "/api/v1/course")
-    public Result getCourseByDate(@Param("start")Date start,@Param("end")Date end){
-        return courseService.findByDate(start,end);
+    @GetMapping(value = "/api/v1/courseWithPage/{page}")
+    public Result getCourseByDate(@PathVariable("page")String page,@Param("start")Date start,@Param("end")Date end,@Param("title")String title){
+        return courseService.findByDate(page,start,end,title);
     }
 
 
@@ -54,8 +54,8 @@ CourseService courseService;
         return courseService.addCourse(course);
     }
 
-    @DeleteMapping(value = "/api/v1/courses")
-    public Result deletebyNo(@Param("courseNo")String courseNo){
+    @DeleteMapping(value = "/api/v1/courses/{courseNo}")
+    public Result deletebyNo(@PathVariable("courseNo")String courseNo){
         return courseService.deleteCourse(courseNo);
     }
 

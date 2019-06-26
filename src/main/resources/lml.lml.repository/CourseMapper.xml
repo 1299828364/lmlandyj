@@ -149,7 +149,14 @@
     <select id="findByDate" resultMap="CourseMap">
         select <include refid="Course_Column_List"/>
         from course where createDate>=#{start} and #{end} >= createDate
-        order by createDate asc
+        order by createDate asc limit #{page},10
+    </select>
+
+    <!--通过时间查找文章表-->
+    <select id="findByDateWithTitle" resultMap="CourseMap">
+        select <include refid="Course_Column_List"/>
+        from course where createDate>=#{start} and #{end} >= createDate and course_title like #{title}
+        order by createDate asc limit #{page},10
     </select>
 
 
@@ -181,6 +188,13 @@
     <delete id="deleteByCourseNo">
         delete from course where course_no=#{courseNo}
     </delete>
+
+
+    <update id="setState" parameterType="lml.lml.domain.Course">
+        update course
+        set state = #{state}
+        where course_no=#{courseNo}
+    </update>
 
     <!--&lt;!&ndash;通过用户ID查找RoleAssignment表&ndash;&gt;-->
     <!--<select id="findOneOfRAByUserId" resultMap="RoleAssignmentMap">-->

@@ -47,73 +47,21 @@
     }
 
     /*#data{*/
-        /*width: 600px;*/
+    /*width: 600px;*/
     /*}*/
 
 </style>
 
-<%--<input type="button" value="新增" onclick="add()" id="add">--%>
-<%--<input type="button" value="删除" onclick="remove()" id="delete">--%>
+<input type="button" value="新增" onclick="add()" id="add">
+<input type="button" value="删除" onclick="remove()" id="delete">
 
-<div class="row" id="data">
-
-    <div id="search-input" class='col-sm-6'>
-        <div class="form-group">
-            <label>请输入文章标题</label>
-            <div class='input-group date'>
-                <input id="search-title" class="form-control" type="text" >
-            </div>
-
-        </div>
-    </div>
-    <div class='col-sm-6'>
-        <div class="form-group">
-            <label>选择开始时间：</label>
-            <!--指定 date标记-->
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' id="start-time" class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class='col-sm-6'>
-        <div class="form-group">
-            <label>选择结束时间：</label>
-            <!--指定 date标记-->
-            <div class='input-group date' id='datetimepicker2'>
-                <input type='text' id="end-time" class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="control" class='col-sm-6'>
-        <div class="form-group">
-            <label>&nbsp;</label>
-            <div class='input-group date'>
-                <input type="button" onclick="doSearch()" value="搜索">
-                <input type="button" value="删除">
-            </div>
-        </div>
-    </div>
-
-
-</div>
-
-<table class="table table-hover table-striped" id="courseTable">
-   <thead>
+<table class="table table-hover table-striped" id="roleTable">
+    <thead>
     <th><input type="checkbox" onclick="allCheck()" id="rem-all"></th>
-    <th>文章标题</th>
-    <th>作者</th>
-    <th>栏目名称</th>
-    <th>创建时间</th>
+    <th>角色编号</th>
+    <th>作色名</th>
     <th>操作</th>
-   </thead>
+    </thead>
     <tbody id="tbody">
 
     </tbody>
@@ -139,22 +87,14 @@
                 </h4>
             </div>
             <div id="modal-content" class="modal-body">
-                <span>文章标题</span><br>
-                <input title="courseTitle"  id="course-title" class="show-info" disabled><br>
-                <span>文章作者</span><br>
-                <input title="courseAuthor" id="author" class="show-info" disabled><br/>
-                <span>文章内容</span><br>
-                <textarea cols="30" rows="5" title="content" id="course-content" class="show-info"></textarea><br/>
-                <span>创建时间</span><br>
-                <input title="courseCreate" id="course-createDate" class="show-info" disabled><br/>
-                <span>栏目名称</span><br>
-                <input title="courseState" id="column-name" class="show-info" disabled>
+                <span>角色名称</span><br>
+                <input title="roleState" id="role-name" class="show-info" disabled>
             </div>
             <div class="modal-footer">
 
-                <%--<button id="save-btn" onclick="doAdd()" type="button" class="btn btn-primary">--%>
-                    <%--保存--%>
-                <%--</button>--%>
+                <button id="save-btn" onclick="doAdd()" type="button" class="btn btn-primary">
+                    保存
+                </button>
                 <button id="update-btn" onclick="doUpdate()" type="button" class="btn btn-primary">
                     提交更改
                 </button>
@@ -171,39 +111,39 @@
 <script rel="script">
     // alert("hello world");
 
-    var selectCourse;
+    var selectrole;
     var nowPage=0;
     var searchPage=0;
-    var initUrl='api/v1/courseWithColumnName/';
-    var searchUrl='/api/v1/courseWithPage/';
+    var initUrl='api/v1/roleWithColumnName/';
+    var searchUrl='/api/v1/roleWithPage/';
     var url=initUrl;
     var page=0;
     var isSearch=false;
-    var courseNos=[];
+    var roleNos=[];
     start();
 
-    
+
     function doUpdate() {
-        var content=$("#course-content").val();
-        selectCourse[content]=content;
-        send('post',selectCourse,'/api/v1/courses',2);
+        var content=$("#role-content").val();
+        selectrole[content]=content;
+        send('post',selectrole,'/api/v1/roles',2);
         closeModal();
     }
 
 
     function allCheck() {
 
-            var allcheck=document.getElementById("rem-all");
-            var checks=document.getElementsByClassName("rem");
-            if(allcheck.checked){
-                for(var i=0;i<checks.length;i+=1){
-                    checks[i].checked=true;
-                }
-            }else {
-                for(var i=0;i<checks.length;i+=1){
-                    checks[i].checked=false;
-                }
+        var allcheck=document.getElementById("rem-all");
+        var checks=document.getElementsByClassName("rem");
+        if(allcheck.checked){
+            for(var i=0;i<checks.length;i+=1){
+                checks[i].checked=true;
             }
+        }else {
+            for(var i=0;i<checks.length;i+=1){
+                checks[i].checked=false;
+            }
+        }
 
     }
 
@@ -246,20 +186,8 @@
     }
 
 
-    function doSearch() {
-
-        var endTime=$("#end-time").val();
-        var startTime=$("#start-time").val();
-        var title=$("#search-title").val();
-        alert(endTime+"<"+startTime);
-        page=searchPage;
-        send("get",{"start":startTime,"end":endTime,"title":title+""},searchUrl+page,2);
-        init(tempData.data);
-
-    }
-
     function edit(id) {
-        document.getElementById("course-content").readOnly=false;
+        document.getElementById("role-content").readOnly=false;
 
         look(id);
         $('#update-btn').toggle();
@@ -269,34 +197,34 @@
         console.log(data);
         clearModel();
         "".split();
-        document.getElementById("course-title").value=data.courseTitle;
+        document.getElementById("role-title").value=data.roleTitle;
         document.getElementById("author").value=data.author;
-        document.getElementById("course-content").innerHTML=data.content;
-        document.getElementById("course-createDate").value=data.createDate.split(".")[0];
+        document.getElementById("role-content").innerHTML=data.content;
+        document.getElementById("role-createDate").value=data.createDate.split(".")[0];
         document.getElementById("column-name").value=1;
         showModal();
     }
 
     function remove(id) {
-        send("delete",'',"/api/v1/courses/"+id,2);
+        send("delete",'',"/api/v1/roles/"+id,2);
         start();
     }
 
     function clearModel() {
-        document.getElementById("course-title").value='';
+        document.getElementById("role-title").value='';
         document.getElementById("author").value='';
-        document.getElementById("course-content").innerHTML='';
-        document.getElementById("course-createDate").value='';
+        document.getElementById("role-content").innerHTML='';
+        document.getElementById("role-createDate").value='';
         document.getElementById("column-name").value='';
     }
 
     function look(id) {
 
-        // document.getElementById("course-content").readOnly='true';
+        // document.getElementById("role-content").readOnly='true';
         $('#update-btn').hide();
-        send('get','','api/v1/course/'+id+'',2);
+        send('get','','api/v1/role/'+id+'',2);
         showInfo(tempData.data);
-        selectCourse=tempData.data;
+        selectrole=tempData.data;
 
     }
 
@@ -404,25 +332,20 @@
         //     tbody.removeChild(childs[i]);
         // }
 
-        courseNos=[];
+        roleNos=[];
         $("#tbody").empty();
         for (var i = 0;i<data.length;i++){
-            courseNos.push(data['courseNo']);
+            roleNos.push(data['roleNo']);
             var tr=document.createElement("tr");
-
             var checkbox=document.createElement("td");
-            checkbox.innerHTML="<input class='rem' type='checkbox' id='rem'/>"
+            checkbox.innerHTML="<input class='rem' type='checkbox' id='rem'/>";
             tr.appendChild(checkbox);
             var td1=document.createElement("td");
             var td2=document.createElement("td");
-            var td3=document.createElement("td");
-            var td4=document.createElement("td");
             var td5=document.createElement("td");
-            td1.innerText=data[i]['courseTitle'];
-            td2.innerText=data[i]['author'];
-            td3.innerText=data[i]['columnName'];
-            td4.innerText=data[i]['createDate'];
-            td5.innerHTML="<input type='button' onclick='remove("+data[i]['courseNo']+")' value='删除'/> <input type='button' onclick='edit("+data[i]['courseNo']+")' value='修改'/>";
+            td1.innerText=data[i]['roleNo'];
+            td2.innerText=data[i]['roleName'];
+            td5.innerHTML="<input type='button' onclick='remove("+data[i]['roleNo']+")' value='删除'/> <input type='button' onclick='edit("+data[i]['roleNo']+")' value='修改'/>";
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);

@@ -16,6 +16,8 @@ public interface RoleRepository {
 
     boolean deleteByRoleNo(@Param("roleNo")String roleNo);
 
+    List<Role> findByPage(int page);
+
 
 
 }

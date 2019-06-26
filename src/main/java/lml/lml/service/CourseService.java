@@ -26,7 +26,7 @@ public interface CourseService {
     /**
      *
      */
-    Result findByDate(Date start,Date end);
+    Result findByDate(String page,Date start,Date end,String title);
 
 
     /**

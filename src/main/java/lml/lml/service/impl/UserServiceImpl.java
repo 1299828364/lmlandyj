@@ -48,4 +48,15 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    @Override
+    public Result findByPage(String page) {
+        int tempPage=Integer.valueOf(page);
+        if(tempPage==0){
+            tempPage=tempPage;
+        }else {
+            tempPage=tempPage*10-1;
+        }
+        return ResultUtil.success(userRepository.findByPage(tempPage));
+    }
 }

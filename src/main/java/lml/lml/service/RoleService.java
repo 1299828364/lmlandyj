@@ -45,4 +45,7 @@ public interface RoleService {
      * @return
      */
     Result updateRole(Role role);
+
+
+    Result findByPage(String page);
 }

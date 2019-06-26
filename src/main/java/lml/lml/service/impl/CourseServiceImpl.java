@@ -38,8 +38,20 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Result findByDate(Date start, Date end) {
-        return ResultUtil.success(courseRepository.findByDate(start,end));
+    public Result findByDate(String page,Date start, Date end,String title) {
+        int tempPage=Integer.valueOf(page);
+        if(tempPage==0){
+            tempPage=tempPage;
+        }else {
+            tempPage=tempPage*10-1;
+        }
+        if(title==null||title.isEmpty()){
+            return ResultUtil.success(courseRepository.findByDate(tempPage,start,end));
+        }else {
+            title="%"+title+"%";
+            return ResultUtil.success(courseRepository.findByDateWithTitle(tempPage,start,end,title));
+        }
+
     }
 
     @Override
@@ -71,7 +83,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result updateState(Course course) {
         course.setState(course.getState()==1?2:1);
-        return ResultUtil.success(courseRepository.editCourse(course));
+        return ResultUtil.success(courseRepository.setState(course));
     }
 
     @Override

@@ -32,4 +32,10 @@ public class RoleControl {
     public Result updateRole(@RequestBody Role role){
         return roleService.updateRole(role);
     }
+
+    @GetMapping(value = "/api/v1/roles/{page}")
+    public Result getRoleByPage(@PathVariable("page")String page){
+        return roleService.findByPage(page);
+    }
+
 }

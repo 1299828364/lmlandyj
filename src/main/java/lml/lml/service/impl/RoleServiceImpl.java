@@ -39,4 +39,15 @@ public class RoleServiceImpl implements RoleService {
     public Result updateRole(Role role) {
         return null;
     }
+
+    @Override
+    public Result findByPage(String page) {
+        int tempPage=Integer.valueOf(page);
+        if(tempPage==0){
+            tempPage=tempPage;
+        }else {
+            tempPage=tempPage*10-1;
+        }
+        return ResultUtil.success(roleRepository.findByPage(tempPage));
+    }
 }

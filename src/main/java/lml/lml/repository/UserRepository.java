@@ -18,4 +18,6 @@ public interface UserRepository {
     boolean deleteByUserNo(@Param("userNo")String userNo);
 
     User findOneByAccount(@Param("userAccount")String account);
+
+    List<User> findByPage(int page);
 }

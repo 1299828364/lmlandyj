@@ -38,4 +38,9 @@ public class UserControl {
     public Result findOne(@PathVariable("no")String userNo){
         return userService.findOneByNo(userNo);
     }
+
+    @GetMapping(value = "/api/v1/users/{page}")
+    public Result getUserByPage(@PathVariable("page")String page){
+        return userService.findByPage(page);
+    }
 }

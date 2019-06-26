@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<%
+    String userName= (String) request.getSession().getAttribute("userName");
+%>
 
     <body>
     <script rel="script">
@@ -75,7 +78,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li role="presentation">
-                        <a href="#">当前用户：<span class="badge">TestUser</span></a>
+                        <a href="#">当前用户：<span class="badge"><%=userName%></span></a>
                     </li>
                     <li>
                         <a href="../login/logout">
@@ -100,8 +103,8 @@
                             <div class="panel-body">
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a href="/course" target="mainFrame">留言管理</a></li>
-                                    <li><a href="course.jsp" target="mainFrame">文章管理</a></li>
-                                    <li><a href="ghsgl.aspx" target="mainFrame">审核文章</a></li>
+                                    <li><a href="/course" target="mainFrame">文章管理</a></li>
+                                    <li><a href="/coursePass" target="mainFrame">审核文章</a></li>
                                     <li><a href="ghsgl.aspx" target="mainFrame">栏目管理</a></li>
                                 </ul>
                             </div>

@@ -16,4 +16,6 @@ public interface UserService {
     Result addRole(User user);
 
     boolean loginCheck(User user);
+
+    Result findByPage(String page);
 }

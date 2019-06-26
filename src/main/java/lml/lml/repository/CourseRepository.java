@@ -41,7 +41,10 @@ public interface CourseRepository {
      */
     boolean editCourse(Course course);
 
-    List<Course> findByDate(@Param("start") Date start,@Param("end")Date end);
+    List<Course> findByDate(@Param("page")int page,@Param("start") Date start,@Param("end")Date end);
+
+
+    List<Course> findByDateWithTitle(@Param("page")int page,@Param("start") Date start,@Param("end")Date end,@Param("title")String title);
 
 
     /**
@@ -53,4 +56,7 @@ public interface CourseRepository {
     List findCourseWithColumn();
 
     List findCourseWithColumnByPage(@Param("page")int page);
+
+
+    boolean setState(Course course);
 }

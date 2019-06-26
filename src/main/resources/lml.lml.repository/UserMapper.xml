@@ -28,6 +28,11 @@
         from user
     </select>
 
+    <select id="findByPage" resultMap="UserMap">
+        select <include refid="User_Column_List"/>
+        from user  limit #{page},10
+    </select>
+
 
     <!--通过UserNo查找用户表-->
     <select id="findOneByNo" resultMap="UserMap">

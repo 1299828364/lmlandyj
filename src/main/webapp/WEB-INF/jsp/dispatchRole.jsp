@@ -47,7 +47,7 @@
     }
 
     /*#data{*/
-        /*width: 600px;*/
+    /*width: 600px;*/
     /*}*/
 
 </style>
@@ -106,14 +106,14 @@
 </div>
 
 <table class="table table-hover table-striped" id="courseTable">
-   <thead>
+    <thead>
     <th><input type="checkbox" onclick="allCheck()" id="rem-all"></th>
     <th>文章标题</th>
     <th>作者</th>
     <th>栏目名称</th>
     <th>创建时间</th>
     <th>操作</th>
-   </thead>
+    </thead>
     <tbody id="tbody">
 
     </tbody>
@@ -153,7 +153,7 @@
             <div class="modal-footer">
 
                 <%--<button id="save-btn" onclick="doAdd()" type="button" class="btn btn-primary">--%>
-                    <%--保存--%>
+                <%--保存--%>
                 <%--</button>--%>
                 <button id="update-btn" onclick="doUpdate()" type="button" class="btn btn-primary">
                     提交更改
@@ -182,7 +182,7 @@
     var courseNos=[];
     start();
 
-    
+
     function doUpdate() {
         var content=$("#course-content").val();
         selectCourse[content]=content;
@@ -193,17 +193,17 @@
 
     function allCheck() {
 
-            var allcheck=document.getElementById("rem-all");
-            var checks=document.getElementsByClassName("rem");
-            if(allcheck.checked){
-                for(var i=0;i<checks.length;i+=1){
-                    checks[i].checked=true;
-                }
-            }else {
-                for(var i=0;i<checks.length;i+=1){
-                    checks[i].checked=false;
-                }
+        var allcheck=document.getElementById("rem-all");
+        var checks=document.getElementsByClassName("rem");
+        if(allcheck.checked){
+            for(var i=0;i<checks.length;i+=1){
+                checks[i].checked=true;
             }
+        }else {
+            for(var i=0;i<checks.length;i+=1){
+                checks[i].checked=false;
+            }
+        }
 
     }
 
