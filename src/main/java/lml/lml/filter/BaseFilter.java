@@ -29,19 +29,16 @@ public class BaseFilter  implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        HttpServletRequest request = (HttpServletRequest) servletRequest;
-//        HttpServletResponse response = (HttpServletResponse) servletResponse;
-//        response.setHeader("Access-Control-Allow-Origin", "*");
-//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, GET");
-//        response.setHeader("Access-Control-Max-Age", "3600");
-//        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-//        filterChain.doFilter(servletRequest,servletResponse);
-//        String curOrigin = request.getHeader("Origin");
-//        System.out.println("###跨域过滤器->当前访问来源->"+curOrigin+"###");
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, GET");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild");
+        filterChain.doFilter(servletRequest,servletResponse);
+        String curOrigin = request.getHeader("Origin");
+        System.out.println("###跨域过滤器->当前访问来源->"+curOrigin+"###");
 
-
-        HttpServletRequest request=(HttpServletRequest)servletRequest;
-        HttpServletResponse response=(HttpServletResponse)servletResponse;
         try{
             request.getSession().getAttribute("page").toString();
         }catch (NullPointerException e){
